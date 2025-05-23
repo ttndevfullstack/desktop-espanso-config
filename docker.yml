@@ -1,0 +1,9 @@
+# espanso match file
+# For a complete introduction, visit the official docs at: https://espanso.org/docs/
+
+matches:
+  # ==============================================================================
+  # Docker
+  # ==============================================================================
+  - trigger: ':docker import'
+    replace: 'docker exec -i mysql-unioss3 mysql -u root -pProotW db_unioss < ./db_unioss.sql'

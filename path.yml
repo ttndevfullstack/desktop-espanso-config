@@ -1,0 +1,40 @@
+matches:
+  # ==============================================================================
+  # Access Directory
+  # ==============================================================================
+  # Root Dir
+  - trigger: ':qasoft'
+    replace: 'cd /home/ttndev/Workspace/Company/Qasoft/Coding/Projects'
+  - trigger: ':personal'
+    replace: 'cd /home/ttndev/Workspace/Personal/Coding/Projects'
+  - trigger: ':school'
+    replace: 'cd /home/ttndev/Workspace/School'
+  - trigger: ':dev_notes'
+    replace: 'cd /home/ttndev/Workspace/Personal/Coding/Projects/Web/Notes/dev_notes'
+
+  # MISA
+  - trigger: ':misa'
+    replace: 'cd /home/ttndev/Workspace/Company/Qasoft/Coding/Projects/misa/source'
+  - trigger: ':misa_accouting'
+    replace: 'cd /home/ttndev/Workspace/Company/Qasoft/Coding/Projects/misa/source/misa-accouting'
+  - trigger: ':misa_web'
+    replace: 'cd /home/ttndev/Workspace/Company/Qasoft/Coding/Projects/misa/source/misa-web'
+  - trigger: ':misa_backend'
+    replace: 'cd /home/ttndev/Workspace/Company/Qasoft/Coding/Projects/misa/source/misa-backend'
+
+  # NAIL
+  - trigger: ':nail'
+    replace: 'cd /home/ttndev/Workspace/Company/Qasoft/Coding/Projects/nail/nail-backend'
+  
+  # Github opensources
+  - trigger: ':opensource'
+    replace: 'cd /home/ttndev/Workspace/Personal/Coding/GithubOpenSources'
+  
+  # Fall predictions
+  - trigger: ':fall'
+    replace: 'cd /home/ttndev/Workspace/School/DATN/fall_prediction_system'
+  
+  # Fall predictions
+  - trigger: ':plagiarism'
+    replace: 'cd /home/ttndev/Workspace/School/DATN/plagiarism_checker_system'
+

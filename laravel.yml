@@ -1,0 +1,417 @@
+matches:
+  - trigger: ":laravel.code list"
+    replace: |
+      Conditional
+      FileManager
+      AppClient
+      LoggerMiddleware
+
+
+      
+  # ==============================================================================
+  # Laravel Command
+  # ==============================================================================
+  - trigger: 'laravel setup'
+    replace: 'composer install --ignore-platform-req=ext-sodium && php artisan key:generate && php artisan storage:link && php artisan cache:clear && php artisan optimize'
+
+  - trigger: ':optimize'
+    replace: 'php artisan config:clear && php artisan cache:clear && php artisan route:clear && php artisan view:clear && php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan optimize'
+  
+  - trigger: ':composer install'
+    replace: 'composer install --ignore-platform-req=ext-sodium'
+
+
+  # ==============================================================================
+  # Laravel Code
+  # ==============================================================================
+  - trigger: ':laravel.code Conditional'
+    replace: |
+      <?php
+
+      namespace App\Traits;
+
+      trait Conditional
+      {
+          /**
+          * Conditionally perform the given callback if the condition is true.
+          *
+          * @param  mixed    $condition
+          * @param  callable $callback
+          * @param  callable|null $default
+          * @return mixed
+          */
+          public function when($condition, callable $callback, callable $default = null)
+          {
+              if ($condition) {
+                  return $callback($this);
+              } elseif ($default) {
+                  return $default($this);
+              }
+
+              return $this;
+          }
+
+          /**
+          * Conditionally perform the given callback if the condition is false.
+          *
+          * @param  mixed    $condition
+          * @param  callable $callback
+          * @param  callable|null $default
+          * @return mixed
+          */
+          public function unless($condition, callable $callback, callable $default = null)
+          {
+              return $this->when(!$condition, $callback, $default);
+          }
+      }
+
+  - trigger: ':laravel.code FileManager'
+    replace: |
+      <?php
+
+      namespace App\Services;
+
+      use Illuminate\Support\Facades\Storage;
+      use Illuminate\Support\Facades\Log;
+      use Exception;
+
+      class FileManager
+      {
+          protected string $disk;
+
+          /**
+          * Constructor to initialize the FileManager with a specific disk.
+          *
+          * @param string $disk
+          */
+          public function __construct(string $disk = 'local')
+          {
+              $this->disk = $disk;
+          }
+
+          /**
+          * Upload a file to the storage.
+          *
+          * @param mixed $file  Uploaded file instance.
+          * @param string $path Path where the file should be stored.
+          * @param string $initials Prefix for the file name.
+          * @return string  File path of the uploaded file.
+          * @throws Exception If file upload fails.
+          */
+          public function upload($file, string $path = 'files', string $initials = 'file'): string
+          {
+              try {
+                  $fileName = $initials . '-' . rand(1, 1000) . sha1(time()) . '.' . $file->getClientOriginalExtension();
+                  $storedFile = $file->storeAs($path, $fileName, $this->disk);
+
+                  if (!$storedFile) {
+                      throw new Exception("File upload failed.");
+                  }
+
+                  return str_replace('\\', '/', $storedFile);
+              } catch (Exception $e) {
+                  Log::error('Error during file upload: ' . $e->getMessage());
+                  throw new Exception("File Uploading Error: " . $e->getMessage());
+              }
+          }
+
+          /**
+          * Download a file from storage.
+          *
+          * @param string $path
+          * @return mixed
+          * @throws Exception If file not found or download fails.
+          */
+          public function download(string $path)
+          {
+              try {
+                  if (!$this->exists($path)) {
+                      throw new Exception("File not found: $path");
+                  }
+
+                  return Storage::disk($this->disk)->download($path);
+              } catch (Exception $e) {
+                  Log::error('Error during file download: ' . $e->getMessage());
+                  throw new Exception("File Download Error: " . $e->getMessage());
+              }
+          }
+
+          /**
+          * Delete a file from storage.
+          *
+          * @param string $path
+          * @return bool
+          * @throws Exception If deletion fails.
+          */
+          public function delete(string $path): bool
+          {
+              try {
+                  return Storage::disk($this->disk)->delete($path);
+              } catch (Exception $e) {
+                  Log::error('Error during file deletion: ' . $e->getMessage());
+                  throw new Exception("File Deletion Error: " . $e->getMessage());
+              }
+          }
+
+          /**
+          * Check if a file exists in storage.
+          *
+          * @param string $path
+          * @return bool
+          */
+          public function exists(string $path): bool
+          {
+              return Storage::disk($this->disk)->exists($path);
+          }
+
+          /**
+          * Get the URL of a file (useful for public disks like S3).
+          *
+          * @param string $path
+          * @return string
+          * @throws Exception If unable to get the URL.
+          */
+          public function getUrl(string $path): string
+          {
+              try {
+                  return Storage::disk($this->disk)->url($path);
+              } catch (Exception $e) {
+                  Log::error('Error getting file URL: ' . $e->getMessage());
+                  throw new Exception("Error getting file URL: " . $e->getMessage());
+              }
+          }
+
+          /**
+          * Move or rename a file in storage.
+          *
+          * @param string $oldPath
+          * @param string $newPath
+          * @return bool
+          */
+          public function move(string $oldPath, string $newPath): bool
+          {
+              try {
+                  return Storage::disk($this->disk)->move($oldPath, $newPath);
+              } catch (Exception $e) {
+                  Log::error('Error moving file: ' . $e->getMessage());
+                  throw new Exception("File Move Error: " . $e->getMessage());
+              }
+          }
+
+          /**
+          * Copy a file within storage.
+          *
+          * @param string $sourcePath
+          * @param string $destinationPath
+          * @return bool
+          */
+          public function copy(string $sourcePath, string $destinationPath): bool
+          {
+              try {
+                  return Storage::disk($this->disk)->copy($sourcePath, $destinationPath);
+              } catch (Exception $e) {
+                  Log::error('Error copying file: ' . $e->getMessage());
+                  throw new Exception("File Copy Error: " . $e->getMessage());
+              }
+          }
+
+          /**
+          * Get metadata of a file (e.g., size, last modified time).
+          *
+          * @param string $path
+          * @return array
+          */
+          public function getMetadata(string $path): array
+          {
+              try {
+                  $size = Storage::disk($this->disk)->size($path);
+                  $lastModified = Storage::disk($this->disk)->lastModified($path);
+
+                  return [
+                      'size' => $size,
+                      'last_modified' => $lastModified,
+                  ];
+              } catch (Exception $e) {
+                  Log::error('Error getting file metadata: ' . $e->getMessage());
+                  throw new Exception("Error getting file metadata: " . $e->getMessage());
+              }
+          }
+
+          /**
+          * List all files in a directory.
+          *
+          * @param string $directory
+          * @param bool $recursive
+          * @return array
+          */
+          public function listFiles(string $directory, bool $recursive = false): array
+          {
+              return Storage::disk($this->disk)->files($directory, $recursive);
+          }
+
+          /**
+          * List all directories in a directory.
+          *
+          * @param string $directory
+          * @param bool $recursive
+          * @return array
+          */
+          public function listDirectories(string $directory, bool $recursive = false): array
+          {
+              return Storage::disk($this->disk)->directories($directory, $recursive);
+          }
+
+          /**
+          * Create a new directory.
+          *
+          * @param string $directory
+          * @return bool
+          */
+          public function createDirectory(string $directory): bool
+          {
+              return Storage::disk($this->disk)->makeDirectory($directory);
+          }
+
+          /**
+          * Delete a directory.
+          *
+          * @param string $directory
+          * @return bool
+          */
+          public function deleteDirectory(string $directory): bool
+          {
+              return Storage::disk($this->disk)->deleteDirectory($directory);
+          }
+      }
+  
+  - trigger: ':laravel.code AppClient'
+    replace: |
+      namespace App;
+ 
+      use GuzzleHttp\Client;
+      
+      class ApiClient
+      {
+          private static $client = null;
+      
+          public function createClient(): Client
+          {
+              return static::$client ??= new Client();
+          }
+      }
+
+  - trigger: ':laravel.code LoggerMiddleware'
+    replace: |
+      <?php
+
+      namespace App\Http\Middleware;
+
+      use Closure;
+      use Carbon\Carbon;
+      use Illuminate\Http\Request;
+      use Illuminate\Http\Response;
+      use Illuminate\Support\Facades\Log;
+
+      class LoggerMiddleware
+      {
+          /**
+          * Fields to exclude from the logged request data.
+          *
+          * @var array
+          */
+          private array $hiddenFields = ['password', 'password_confirmation'];
+
+          /**
+          * Data to log.
+          *
+          * @var array
+          */
+          private array $data = [];
+
+          /**
+          * Handle an incoming request.
+          *
+          * @param Request $request
+          * @param Closure $next
+          *
+          * @return mixed
+          */
+          public function handle(Request $request, Closure $next)
+          {
+              $response = $next($request);
+
+              $this->collectRequestData($request);
+              $this->includeAuthenticatedUser($request);
+              $this->filterSensitiveData($request);
+              $this->collectResponseData($response);
+
+              Log::info('Request Log:', $this->data);
+
+              return $response;
+          }
+
+          /**
+          * Collect general request data.
+          *
+          * @param Request $request
+          */
+          private function collectRequestData(Request $request): void
+          {
+              $headers = $request->headers->all();
+              $this->data = [
+                  'path'         => $request->getPathInfo(),
+                  'method'       => $request->getMethod(),
+                  'ip'           => $request->ip(),
+                  'http_version' => $request->server('SERVER_PROTOCOL'),
+                  'timestamp'    => Carbon::now()->toDateTimeString(),
+                  'headers'      => [
+                      'user-agent' => $headers['user-agent'][0] ?? null,
+                      'referer'    => $headers['referer'][0] ?? null,
+                      'origin'     => $headers['origin'][0] ?? null,
+                  ],
+              ];
+          }
+
+          /**
+          * Include authenticated user data if available.
+          *
+          * @param Request $request
+          */
+          private function includeAuthenticatedUser(Request $request): void
+          {
+              if ($user = $request->user()) {
+                  $this->data['user_id'] = $user->id;
+              }
+          }
+
+          /**
+          * Filter out sensitive data from the request payload.
+          *
+          * @param Request $request
+          */
+          private function filterSensitiveData(Request $request): void
+          {
+              if (in_array($request->method(), ['POST', 'PUT', 'PATCH'])) {
+                  $this->data['request'] = $request->except($this->hiddenFields);
+              }
+          }
+
+          /**
+          * Collect relevant response data.
+          *
+          * @param Response $response
+          */
+          private function collectResponseData(Response $response): void
+          {
+              $contents = json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
+
+              if (!empty($contents['message'])) {
+                  $this->data['response']['message'] = $contents['message'];
+              }
+
+              if (!empty($contents['errors'])) {
+                  $this->data['response']['errors'] = $contents['errors'];
+              }
+          }
+      }
+      

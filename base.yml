@@ -1,0 +1,58 @@
+# espanso match file
+# For a complete introduction, visit the official docs at: https://espanso.org/docs/
+
+matches:
+  # ==============================================================================
+  # Common
+  # ==============================================================================
+  - trigger: ':note'
+    replace: '# =============================================================================='
+  - trigger: ':xclip'
+    replace: 'xclip -selection clipboard'
+  - trigger: ':pwd'
+    replace: 'pwd | xclip -selection clipboard'
+  - trigger: ':copy struct'
+    replace: 'find <dir_name> -type d > structure.txt && find <dir_name> >> structure.txt'
+
+
+
+  # ==============================================================================
+  # Personal Information
+  # ==============================================================================
+  - trigger: ':date'
+    replace: '{{mydate}}'
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: '%m/%d/%Y'
+
+  - trigger: ':birth'
+    replace: '14/10/2003'
+
+  - trigger: ':name vi'
+    replace: 'Trương Trung Nghĩa'
+
+  - trigger: ':name en'
+    replace: 'Trương Trung Nghĩa'
+
+  - trigger: ':mssv'
+    replace: '2180607790'
+
+  - trigger: ':email1'
+    replace: 'nghiakydiem@gmail.com'
+
+  - trigger: ':email2'
+    replace: 'ttn.dev.fullstack@gmail.com'
+
+  - trigger: ':email3'
+    replace: 'nghiatt1410@gmail.com'
+
+  - trigger: ':pass'
+    replace: '146Ttn@common'
+
+  - trigger: ':phone'
+    replace: '0767433579'
+
+  - trigger: ':bank_number'
+    replace: '19037301560011'

@@ -1,0 +1,23 @@
+matches:
+  # ==============================================================================
+  # AWS CLI command
+  # ==============================================================================
+  - trigger: ':aws ec2 desc'
+    replace: "aws ec2 describe-instances | jq '.Reservations[].Instances[] | {InstanceId: .InstanceId, PublicIP: .PublicIpAddress, PrivateIP: .PrivateIpAddress, Status: .State.Name}'"
+
+  - trigger: ':aws ssh'
+    replace: 'ssh -i ~/.ssh/aws_instances_singapore_key_pair.pem ubuntu@<public_ip>'
+
+  - trigger: ':aws scp'
+    replace: "scp -i ~/.ssh/aws_instances_singapore_key_pair.pem -r <project>/* ubuntu@13.229.99.244:/var/www/<project>"
+
+  - trigger: ":aws ec2 create"
+    replace: |
+      aws ec2 run-instances \
+          --image-id ami-047126e50991d067b \
+          --count 1 \
+          --instance-type t2.micro \
+          --key-name aws_instances_singapore_key_pair \
+          --security-group-ids sg-0e032cb0341a161c1 \
+          --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=Ubuntu}]'
+

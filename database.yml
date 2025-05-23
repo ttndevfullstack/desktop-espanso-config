@@ -1,0 +1,53 @@
+matches:
+  # ==============================================================================
+  # Database command
+  # ==============================================================================
+  # User Control
+  - trigger: ':mysql add user'
+    replace: "CREATE USER 'ttndev'@'%' IDENTIFIED BY 'ttndev'; GRANT ALL PRIVILEGES ON *.* TO 'ttndev'@'%' WITH GRANT OPTION; FLUSH PRIVILEGES;"
+
+  # Import
+  - trigger: ':mysql import'
+    replace: 'mysql -u ttndev -p my_database < /home/user/backups/my_database_backup.sql'
+
+  # Backup  
+  - trigger: ':mysql backup tb struct'
+    replace: 'mysqldump -u root -p -d [db] [tb] > /home/ttndev/backups/mysql/archive/db_[db]_tb_[tb]_struct_{{timestamp}}.sql'
+    vars:
+      - name: timestamp
+        type: date
+        params:
+          format: '%m_%d_%Y_%H_%M_%S'
+
+  - trigger: ':mysql backup tb data'
+    replace: 'mysqldump -u root -p -t [db] [tb] > /home/ttndev/backups/mysql/archive/db_[db]_tb_[tb]_data_{{timestamp}}.sql'
+    vars:
+      - name: timestamp
+        type: date
+        params:
+          format: '%m_%d_%Y_%H_%M_%S'
+
+  - trigger: ':mysql backup tb all'
+    replace: 'mysqldump -u root -p -t [db] [tb] > /home/ttndev/backups/mysql/archive/db_[db]_tb_[tb]_{{timestamp}}.sql'
+    vars:
+      - name: timestamp
+        type: date
+        params:
+          format: '%m_%d_%Y_%H_%M_%S'
+          
+  - trigger: ':mysql backup db one'
+    replace: 'mysqldump -u root -p [db] > /home/ttndev/backups/mysql/archive/db_[db]_{{timestamp}}.sql'
+    vars:
+      - name: timestamp
+        type: date
+        params:
+          format: '%m_%d_%Y_%H_%M_%S'
+
+  - trigger: ":mysql backup db all"
+    replace: "mysqldump -u root -p --all-databases > /home/ttndev/backups/mysql/archive/db_all_{{timestamp}}.sql"
+    vars:
+      - name: timestamp
+        type: date
+        params:
+          format: '%m_%d_%Y_%H_%M_%S'
+

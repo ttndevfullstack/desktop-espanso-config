@@ -1,0 +1,25 @@
+# espanso match file
+# For a complete introduction, visit the official docs at: https://espanso.org/docs/
+
+matches:
+  # ==============================================================================
+  # TPS Information
+  # ==============================================================================
+  - trigger: ':tps ur'
+    replace: 'nghia.truong'
+  - trigger: ':tps em'
+    replace: 'nghia.truong@tpssoft.com'
+  - trigger: ':tps ps'
+    replace: '146Ttn@tps'
+  - trigger: ':tps git ps'
+    replace: 'M1nhNguy3n'
+  - trigger: ':ssh tps'
+    replace: 'eval $(ssh-agent -s) && ssh-add ~/.ssh/id_ttndev_tps'
+  
+
+
+  # ==============================================================================
+  # TPS Path
+  # ==============================================================================
+  - trigger: ':tps unioss'
+    replace: 'cd /home/ttndev/workspace/company/tps/projects/unioss/source/master'

@@ -1,0 +1,31 @@
+matches:
+  # ==============================================================================
+  # Bash Scripts
+  # ==============================================================================
+  # ADD SSH
+  - trigger: ':ssh qasoft'
+    replace: 'eval $(ssh-agent -s) && ssh-add ~/.ssh/id_ttndev_qasoft'
+  - trigger: ':ssh personal'
+    replace: 'eval $(ssh-agent -s) && ssh-add ~/.ssh/id_ttndev_personal'
+  - trigger: ':ssh school'
+    replace: 'eval $(ssh-agent -s) && ssh-add ~/.ssh/id_ttndev_school'
+  - trigger: ':add node'
+    replace: 'export NODE_OPTIONS=--max-old-space-size=8192'
+
+
+
+  # ==============================================================================
+  # Linux commands
+  # ==============================================================================
+  # Install phpenv
+  - trigger: ":linux install phpenv"
+    replace: |
+      sudo apt update && \
+      sudo apt install -y git build-essential libssl-dev libcurl4-openssl-dev libxml2-dev libjpeg-dev libpng-dev libfreetype6-dev libbz2-dev libreadline-dev libonig-dev && \
+      git clone https://github.com/phpenv/phpenv.git ~/.phpenv && \
+      echo 'export PATH="$HOME/.phpenv/bin:$PATH"' >> ~/.bashrc && \
+      echo 'eval "$(phpenv init -)"' >> ~/.bashrc && \
+      source ~/.bashrc && \
+      git clone https://github.com/php-build/php-build.git ~/.phpenv/plugins/php-build && \
+      phpenv -v
+

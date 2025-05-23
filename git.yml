@@ -1,0 +1,40 @@
+matches:
+  # ==============================================================================
+  # Git command
+  # ==============================================================================
+  - trigger: ':git init'
+    replace: 'git init && git add . && git commit -m "feat: initialize app" && git branch -M main && git remote add origin git@github.com:ttndevfullstack/PROJECT.git && git push -u origin main'
+  - trigger: ':current'
+    replace: 'git branch --show-current | xclip -selection clipboard'
+  - trigger: ':push'
+    replace: 'git add . && git commit -m "feat: update" && git push'
+  - trigger: ':remote'
+    replace: 'git remote add origin git@github.com:ttndevfullstack/[repo].git'
+  - trigger: ':develop'
+    replace: 'git fetch origin && git checkout develop && git pull origin develop'
+  - trigger: ':git stash push'
+    replace: 'git stash push -m "stash name"'
+  - trigger: ':git stash apply'
+    replace: 'git stash apply stash@{index}'
+  
+  - trigger: ':git tag'
+    replace: 'git tag -a v1.0.0 -m "Release version 1.0.0" && git push origin v1.0.0'
+  
+  - trigger: ':git commit init'
+    replace: 'git add . &&  git commit -m "setup: init application" && git push origin HEAD'
+  - trigger: ':git commit feat'
+    replace: 'git add . &&  git commit -m "feat(<module>): add ..." && git push origin HEAD'
+  - trigger: ':git commit fix'
+    replace: 'git add . &&  git commit -m "fix(<module>): ..." && git push origin HEAD'
+  - trigger: ':git commit update'
+    replace: 'git add . &&  git commit -m "feat: update" && git push origin HEAD'
+  - trigger: ':git commit refactor'
+    replace: 'git add . &&  git commit -m "refactor(<module>): move ..." && git push origin HEAD'
+  - trigger: ':git commit conflict'
+    replace: 'git add . &&  git commit -m "fix: resolve conflict" && git push origin HEAD'
+  
+  - trigger: ':git sub init'
+    replace: 'git submodule update --init --recursive && git submodule update --recursive --remote && git pull --recurse-submodules'
+  - trigger: ':git sub update'
+    replace: 'git submodule update --recursive --remote && git pull --recurse-submodules'  
+

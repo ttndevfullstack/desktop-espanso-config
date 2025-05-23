@@ -1,0 +1,161 @@
+matches:
+  # ==============================================================================
+  # CURD Collection
+  # ==============================================================================
+  - trigger: ':ts.code curd'
+    replace: |
+      class CollectionService<T> {
+        private collection: T[];
+
+        constructor(initialCollection: T[] = []) {
+          this.collection = [...initialCollection];
+        }
+
+        createItem(newItem: T): void {
+          this.collection.push(newItem);
+        }
+
+        readItems(): ReadonlyArray<T> {
+          return [...this.collection];
+        }
+
+        updateItem(index: number, updatedItem: T): boolean {
+          if (index >= 0 && index < this.collection.length) {
+            this.collection[index] = updatedItem;
+            return true;
+          }
+          return false;
+        }
+
+        deleteItem(indexToDelete: number): boolean {
+          if (indexToDelete >= 0 && indexToDelete < this.collection.length) {
+            this.collection = this.collection.filter((_, i) => i !== indexToDelete);
+            return true;
+          }
+          return false;
+        }
+
+        getCollection(): ReadonlyArray<T> {
+          return [...this.collection];
+        }
+      }
+  
+  
+  # ==============================================================================
+  # JS Memorize
+  # ==============================================================================
+  - trigger: ':js.code memoize'
+    replace: |
+      const memoize = (func) => {
+        const results = {};
+        return (...args) => {
+          const argsKey = JSON.stringify(args);
+          if (!results[argsKey]) {
+            results[argsKey] = func(...args);
+          }
+          return results[argsKey];
+        };
+      };
+
+      const calculator = memoize((num) => {});
+  
+  # ==============================================================================
+  # TS Memorize
+  # ==============================================================================
+  - trigger: ':ts.code memoize'
+    replace: |
+      const memoize = <T extends (...args: any[]) => any>(func: T) => {
+        const results: Record<string, ReturnType<T>> = {};
+        return (...args: Parameters<T>): ReturnType<T> => {
+          const argsKey = JSON.stringify(args);
+          if (!(argsKey in results)) {
+            results[argsKey] = func(...args);
+          }
+          return results[argsKey];
+        };
+      };
+
+      // Example usage with a calculator function
+      const calculator = memoize((num: number) => {
+        console.log("Calculating...");
+        return num * 2;
+      });
+  
+  # ==============================================================================
+  # TS debounce
+  # ==============================================================================
+  - trigger: ':ts.code debounce'
+    replace: |
+      function debounce<T extends (...args: any[]) => void>(func: T, delay: number): (...args: Parameters<T>) => void {
+      let timeoutId: ReturnType<typeof setTimeout>;
+
+      return function (...args: Parameters<T>): void {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+          func(...args);
+        }, delay);
+      };
+      }
+
+      // Example Usage
+      const handleResize = debounce(() => {
+      console.log('Resized!');
+      }, 300);
+
+      window.addEventListener('resize', handleResize);
+  
+  # ==============================================================================
+  # TS throttle
+  # ==============================================================================
+  - trigger: ':ts.code throttle'
+    replace: |
+      function throttle<T extends (...args: any[]) => void>(func: T, limit: number): (...args: Parameters<T>) => void {
+        let lastCall = 0;
+
+        return function (...args: Parameters<T>): void {
+          const now = Date.now();
+
+          if (now - lastCall >= limit) {
+            lastCall = now;
+            func(...args);
+          }
+        };
+      }
+
+      // Example Usage
+      const handleScroll = throttle(() => {
+        console.log('Scrolled!', Date.now());
+      }, 1000);
+
+      window.addEventListener('scroll', handleScroll);
+  
+  # ==============================================================================
+  # TS Deep Copy
+  # ==============================================================================
+  - trigger: ':ts.code deepClone'
+    replace: |
+      function deepClone<T>(obj: T): T {
+        if (obj === null || obj === undefined) {
+          return obj; // Return null or undefined as-is
+        }
+
+        if (typeof obj !== "object") {
+          return obj;
+        }
+
+        if (Array.isArray(obj)) {
+          const copy: any[] = [];
+          for (const item of obj) {
+            copy.push(deepClone(item));
+          }
+          return copy as T;
+        }
+
+        const copy: { [key: string]: any } = {};
+        for (const key in obj) {
+          if (obj.hasOwnProperty(key)) {
+            copy[key] = deepClone(obj[key]);
+          }
+        }
+        return copy as T;
+      }

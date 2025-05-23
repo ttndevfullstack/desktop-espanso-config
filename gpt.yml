@@ -1,0 +1,45 @@
+# espanso match file
+# For a complete introduction, visit the official docs at: https://espanso.org/docs/
+
+matches:
+  # ==============================================================================
+  # Chat GPT questions
+  # ==============================================================================
+  - trigger: ':gpt fix'
+    replace: |
+      You are a highly skilled senior software developer with expertise in [Framework]. Your task is to identify, fix, and optimize the code to resolve specific issues and improve performance. Ensure the final solution is robust, maintainable, and adheres to best practices.
+
+      **Details:**
+      Bug Description: [Provide a detailed description of the bug, e.g., "The application crashes when handling large JSON payloads."]
+      - **Code Context:** [Include relevant snippets, or describe the affected module/function/class.]
+      - **Expected Behavior:** [Define what the code should do after fixing the bug, e.g., "Handle large payloads without crashing."]
+      - **Optimization Goals:** [State optimization goals, e.g., "Reduce API response time by 30%."]
+      - **Environment:** [Describe the development environment, e.g., "Python 3.9 with Django 4.0."]
+
+      **Deliverables:**
+      - Fixed and optimized code.
+      - Detailed explanation of the bug, how it was fixed, and the optimizations applied.
+      - Updated test cases and coverage report.
+      - Suggestions for future improvements or preventive measures.
+
+  - trigger: ':gpt code'
+    replace: |
+      You have several years of expertise as a senior developer. Write code for a [Project Type/Technology] that [TASK]. Verify that it is the best option and that it is applied to nearly all major business projects. Make sure the code is clear, easy to read, and maintainable.
+
+      **Details:**
+      - **Purpose:** [Briefly describe the goal of the code or project.]
+      - **Requirements:** [List specific requirements or features.]
+      - **Input/Output:** [Describe the expected inputs and outputs.]
+      - **Performance:** [Specify any performance considerations.]
+      - **Best Practices:** Ensure the solution follows industry best practices for [Technology/Framework].  
+      
+      **Testing:** Provide [Unit/Integration/Other] tests to verify the code functionality.
+      - Write unit tests for core functionalities using [Testing Framework].
+      - Include integration tests if applicable.
+      - Provide a test coverage report and ensure coverage exceeds [percentage, e.g., 90%].
+
+      **Post-Implementation Review:** Ensure the code includes proper comments and is production-ready.
+      - Evaluate the code for potential optimizations.
+      - Document the solution thoroughly, including inline comments and external documentation.
+      - Ensure the code includes proper comments and is production-ready.
+
