@@ -16,6 +16,8 @@ matches:
     replace: 'git stash push -m "stash name"'
   - trigger: ':git stash apply'
     replace: 'git stash apply stash@{index}'
+  - trigger: ':git reset branch'
+    replace: 'git fetch --all && git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)'
   
   - trigger: ':git tag'
     replace: 'git tag -a v1.0.0 -m "Release version 1.0.0" && git push origin v1.0.0'
@@ -36,5 +38,5 @@ matches:
   - trigger: ':git sub init'
     replace: 'git submodule update --init --recursive && git submodule update --recursive --remote && git pull --recurse-submodules'
   - trigger: ':git sub update'
-    replace: 'git submodule update --recursive --remote && git pull --recurse-submodules'  
+    replace: 'git submodule update --recursive --remote && git pull --recurse-submodules'
 

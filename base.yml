@@ -54,5 +54,8 @@ matches:
   - trigger: ':phone'
     replace: '0767433579'
 
-  - trigger: ':bank_number'
+  - trigger: ':bank'
     replace: '19037301560011'
+  
+  - trigger: ':visa'
+    replace: '4089041064145923'

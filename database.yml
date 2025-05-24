@@ -1,6 +1,7 @@
 matches:
+
   # ==============================================================================
-  # Database command
+  # MySQL Commands
   # ==============================================================================
   # User Control
   - trigger: ':mysql add user'
@@ -8,7 +9,7 @@ matches:
 
   # Import
   - trigger: ':mysql import'
-    replace: 'mysql -u ttndev -p my_database < /home/user/backups/my_database_backup.sql'
+    replace: 'sudo mysql -u ttndev -p nail_dev < /mnt/c/Users/ttnde/Downloads/Telegram\ Desktop/top1.sql'
 
   # Backup  
   - trigger: ':mysql backup tb struct'
@@ -51,3 +52,14 @@ matches:
         params:
           format: '%m_%d_%Y_%H_%M_%S'
 
+  - trigger: ":mysql show users"
+    replace: "SELECT user, host FROM mysql.user;"
+  
+  - trigger: ":mysql show users"
+    replace: "SELECT user, host FROM mysql.user;"
+  
+  - trigger: ":mysql show grants"
+    replace: "SHOW GRANTS FOR 'ttndev'@'%';"
+  
+  - trigger: ":mysql grant all"
+    replace: "GRANT ALL PRIVILEGES ON `docker-setup`.* TO `ttndev`@`%`;"

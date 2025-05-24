@@ -29,3 +29,24 @@ matches:
       git clone https://github.com/php-build/php-build.git ~/.phpenv/plugins/php-build && \
       phpenv -v
 
+  - trigger: ":linux show group"
+    replace: "getent group <group_name>"
+  
+  - trigger: ":linux show group"
+    replace: "getent group <group_name>"
+  
+  - trigger: ":linux user pass"
+    replace: "getent passwd <user_name>"
+  
+  - trigger: ":linux add user"
+    replace: "sudo adduser <user_name>"
+  
+  - trigger: ":linux add user"
+    replace: "sudo usermod -aG docker <user_name>"
+  
+  - trigger: ":linux clean"
+    replace: |
+      sudo apt autoremove -y && sudo apt autoclean && sudo apt clean && \
+      sudo apt --purge autoremove && sudo journalctl --vacuum-time=3d && \
+      sudo rm -rf /var/log/*.gz /var/log/*.[0-9]
+

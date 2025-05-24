@@ -6,19 +6,10 @@ matches:
       AppClient
       LoggerMiddleware
 
-
-      
-  # ==============================================================================
-  # Laravel Command
-  # ==============================================================================
-  - trigger: 'laravel setup'
-    replace: 'composer install --ignore-platform-req=ext-sodium && php artisan key:generate && php artisan storage:link && php artisan cache:clear && php artisan optimize'
-
-  - trigger: ':optimize'
-    replace: 'php artisan config:clear && php artisan cache:clear && php artisan route:clear && php artisan view:clear && php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan optimize'
   
-  - trigger: ':composer install'
-    replace: 'composer install --ignore-platform-req=ext-sodium'
+  - trigger: ':tinker pass'
+    replace: |
+      \App\User::where('email', 'top88one88@gmail.com')->first()->update(['password' => Hash::make('123123123')]);
 
 
   # ==============================================================================

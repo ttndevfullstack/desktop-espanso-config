@@ -1,0 +1,123 @@
+# espanso match file
+# For a complete introduction, visit the official docs at: https://espanso.org/docs/
+
+matches:
+  # ==============================================================================
+  # Prompts
+  # ==============================================================================
+  - trigger: ':prompt fix'
+    replace: |
+      You are a highly skilled senior software developer with expertise in [Framework]. Your task is to identify, fix, and optimize the code to resolve specific issues and improve performance. Ensure the final solution is robust, maintainable, and adheres to best practices.
+
+      **Details:**
+      Bug Description: [Provide a detailed description of the bug, e.g., "The application crashes when handling large JSON payloads."]
+      - **Code Context:** [Include relevant snippets, or describe the affected module/function/class.]
+      - **Expected Behavior:** [Define what the code should do after fixing the bug, e.g., "Handle large payloads without crashing."]
+      - **Optimization Goals:** [State optimization goals, e.g., "Reduce API response time by 30%."]
+      - **Environment:** [Describe the development environment, e.g., "Python 3.9 with Django 4.0."]
+
+      **Deliverables:**
+      - Fixed and optimized code.
+      - Detailed explanation of the bug, how it was fixed, and the optimizations applied.
+      - Updated test cases and coverage report.
+      - Suggestions for future improvements or preventive measures.
+
+  - trigger: ':prompt code'
+    replace: |
+      You have several years of expertise as a senior developer. Write code for a [Project Type/Technology] that [TASK]. Verify that it is the best option and that it is applied to nearly all major business projects. Make sure the code is clear, easy to read, and maintainable.
+
+      **Details:**
+      - **Purpose:** [Briefly describe the goal of the code or project.]
+      - **Requirements:** [List specific requirements or features.]
+      - **Input/Output:** [Describe the expected inputs and outputs.]
+      - **Performance:** [Specify any performance considerations.]
+      - **Best Practices:** Ensure the solution follows industry best practices for [Technology/Framework].  
+
+      **Testing:** Provide [Unit/Integration/Other] tests to verify the code functionality.
+      - Write unit tests for core functionalities using [Testing Framework].
+      - Include integration tests if applicable.
+      - Provide a test coverage report and ensure coverage exceeds [percentage, e.g., 90%].
+
+      **Post-Implementation Review:** Ensure the code includes proper comments and is production-ready.
+      - Evaluate the code for potential optimizations.
+      - Document the solution thoroughly, including inline comments and external documentation.
+      - Ensure the code includes proper comments and is production-ready.
+
+  - trigger: ':prompt summary'
+    replace: |
+      You are an AI assistant specialized in analyzing YouTube video transcripts related to software engineering. Your task is to extract key insights from a given script. Identify the following:
+
+      Main Topic – Summarize the overall subject of the video.
+      Key Concepts – List the most important technical terms or principles discussed.
+      Important Takeaways – Highlight the core lessons, best practices, or techniques mentioned.
+      Code Examples (if any) – Extract and format any programming snippets found in the script.
+      Actionable Advice – Provide practical steps or recommendations based on the content.
+      Common Mistakes (if mentioned) – Identify and summarize any pitfalls the speaker warns about.
+      This is script "".
+
+  - trigger: ':prompt ui'
+    replace: |
+      Create a modern and sleek UI using TailwindCSS that closely matches the attached image. The UI should include interactive effects such as hover states, click animations, and smooth transitions to enhance user experience. Ensure the design is visually appealing with subtle color enhancements while maintaining a clean aesthetic. Follow these detailed requirements:
+
+      Design & Functionality Requirements:
+      Pixel-Perfect Match – The UI should look as close as possible to the provided image.
+
+      TailwindCSS Only – Use TailwindCSS for styling (avoid external CSS unless necessary).
+
+      Style –
+      
+      Font, font size, font color, color, background color should be as similar as possible to the attached photo.
+
+      Interactivity & Animations –
+
+      Implement hover effects for buttons, links, and interactive elements.
+
+      Add click animations for buttons and UI elements.
+
+      Include smooth transitions (e.g., ease-in-out, duration-300).
+
+      Responsiveness –
+
+      Fully responsive across mobile, tablet, and desktop.
+
+      Use Tailwind's responsive utilities (sm:, md:, lg:, etc.).
+
+      Ensure proper spacing, scaling, and alignment on all screen sizes.
+
+      Accessibility & Usability –
+
+      Follow best practices for contrast, font sizes, and spacing.
+
+      Use aria-labels and semantic HTML for accessibility.
+
+      Full Code Output – Provide a complete HTML, TailwindCSS, and JavaScript code implementation.
+
+      Additional Features (if applicable) –
+
+      Include animations such as fade-in, slide-up, or scale effects.
+
+      Implement dark mode support if suitable for the design.
+
+      Ensure that text and buttons maintain readability.
+
+      Output the complete and structured code to ensure easy implementation.
+
+  - trigger: ':prompt question'
+    replace: |
+      I'm working on a [describe project, e.g., React dashboard]. Propose a folder structure to organize my files. Before answering, ask me 5-10 yes/no or short-answer questions to refine your recommendation. Number each question, and I'll reply inline.
+
+  - trigger: ':prompt improve'
+    replace: |
+      Here's my current workspace structure: [paste/file tree]. Suggest improvements to scale this [backend/frontend] project, focusing on [specific goal, e.g., modularity, performance]. Ask me 3 critical questions first to clarify my needs.
+
+  - trigger: ':prompt debug'
+    replace: |
+      I'm getting this error: [paste error]. Here's the relevant code: [snippet]. Propose 3 potential fixes. Then, ask me 1-2 questions about my environment (e.g., dependencies, OS) to narrow down the solution.
+
+  - trigger: ':prompt review'
+    replace: |
+      Review this [language] code for [performance/readability/security]: [paste snippet]. Highlight 3 strengths, 3 weaknesses, and ask me 2 questions about constraints (e.g., 'Is backward compatibility required?') to tailor suggestions.
+
+  - trigger: ':prompt explain'
+    replace: |
+      Explain [topic, e.g., 'React hooks'] as if I'm a mid-level developer. Start with core principles, then ask me 2-3 questions to gauge my familiarity and adapt your explanation (e.g., 'Are you comfortable with closures?').

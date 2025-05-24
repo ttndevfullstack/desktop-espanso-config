@@ -1,0 +1,39 @@
+matches:
+
+  # ==============================================================================
+  # PHP Command
+  # ==============================================================================
+  - trigger: ':phpenv install'
+    replace: "phpenv install 8.3.13 && phpenv global 8.3.13 && phpenv rehash && php -v"
+
+
+
+  # ==============================================================================
+  # Laravel Command
+  # ==============================================================================
+  - trigger: ':laravel setup'
+    replace: 'rm -rf vendor composer.lock && composer clear-cache && composer install && php artisan key:generate && php artisan storage:link && php artisan migrate && php artisan db:seed'
+
+  - trigger: ':optimize'
+    replace: 'php artisan config:clear && php artisan cache:clear && php artisan route:clear && php artisan view:clear && php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan optimize'
+
+  - trigger: ':laravel smtp'
+    replace: |
+      MAIL_MAILER=smtp
+      MAIL_HOST=smtp.gmail.com
+      MAIL_PORT=587
+      MAIL_USERNAME=nghiakydiem@gmail.com
+      MAIL_PASSWORD="zyeg jpde zjmr qckm"
+      MAIL_ENCRYPTION=tls
+      MAIL_FROM_ADDRESS="nghiakydiem@gmail.com"
+      MAIL_FROM_NAME="${APP_NAME}"
+
+  - trigger: ':composer refresh'
+    replace: "rm -rf vendor composer.lock && composer clear-cache && composer install"
+
+
+  # ==============================================================================
+  # React Command
+  # ==============================================================================
+  - trigger: ':npm setup'
+    replace: 'rm -rf node_modules && rm -rf yarn.lock && rm -rf package.lock && yarn install'

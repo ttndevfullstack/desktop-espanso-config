@@ -4,37 +4,40 @@ matches:
   # ==============================================================================
   # Root Dir
   - trigger: ':qasoft'
-    replace: 'cd /home/ttndev/Workspace/Company/Qasoft/Coding/Projects'
+    replace: 'cd /home/ttndev/workspace/company/qasoft'
   - trigger: ':personal'
-    replace: 'cd /home/ttndev/Workspace/Personal/Coding/Projects'
+    replace: 'cd /home/ttndev/workspace/personal'
   - trigger: ':school'
-    replace: 'cd /home/ttndev/Workspace/School'
+    replace: 'cd /home/ttndev/workspace/school'
   - trigger: ':dev_notes'
-    replace: 'cd /home/ttndev/Workspace/Personal/Coding/Projects/Web/Notes/dev_notes'
+    replace: 'cd /home/ttndev/workspace/personal/dev_notes'
+  
+  - trigger: ':temp'
+    replace: '/mnt/c/Users/ttnde/Downloads/temp/'
 
   # MISA
   - trigger: ':misa'
-    replace: 'cd /home/ttndev/Workspace/Company/Qasoft/Coding/Projects/misa/source'
+    replace: 'cd /home/ttndev/workspace/company/qasoft/misa/source'
   - trigger: ':misa_accouting'
-    replace: 'cd /home/ttndev/Workspace/Company/Qasoft/Coding/Projects/misa/source/misa-accouting'
+    replace: 'cd /home/ttndev/workspace/company/qasoft/misa/source/misa-accouting'
   - trigger: ':misa_web'
-    replace: 'cd /home/ttndev/Workspace/Company/Qasoft/Coding/Projects/misa/source/misa-web'
+    replace: 'cd /home/ttndev/workspace/company/qasoft/misa/source/misa-web'
   - trigger: ':misa_backend'
-    replace: 'cd /home/ttndev/Workspace/Company/Qasoft/Coding/Projects/misa/source/misa-backend'
+    replace: 'cd /home/ttndev/workspace/company/qasoft/misa/source/misa-backend'
 
   # NAIL
   - trigger: ':nail'
-    replace: 'cd /home/ttndev/Workspace/Company/Qasoft/Coding/Projects/nail/nail-backend'
+    replace: 'cd /home/ttndev/workspace/company/qasoft/nail/source/nail-backend'
   
   # Github opensources
   - trigger: ':opensource'
-    replace: 'cd /home/ttndev/Workspace/Personal/Coding/GithubOpenSources'
+    replace: 'cd /home/ttndev/workspace/personal/Coding/GithubOpenSources'
   
-  # Fall predictions
-  - trigger: ':fall'
-    replace: 'cd /home/ttndev/Workspace/School/DATN/fall_prediction_system'
-  
-  # Fall predictions
+  # Plagiarism
   - trigger: ':plagiarism'
-    replace: 'cd /home/ttndev/Workspace/School/DATN/plagiarism_checker_system'
+    replace: 'cd /home/ttndev/workspace/school/plagiarism_checker_system'
+  
+  # Plagiarism
+  - trigger: ':manga'
+    replace: 'cd /home/ttndev/workspace/freelance/web-truyen'
 

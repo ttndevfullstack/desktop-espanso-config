@@ -5,7 +5,26 @@ matches:
   # ==============================================================================
   # React Hooks
   # ==============================================================================
-  - trigger: ':react.code useFetch'
+  - trigger: ':react.hook list'
+    replace: |
+      useFetch
+      usePrevious
+      useToggle
+      useLocalStorage
+      useDebounce
+      useInterval
+      useWindowSize
+      useOnClickOutside
+      useHover
+      useMediaQuery
+      useWebSocket
+      useInfiniteScroll
+      useLocalStorage
+      useThrottle
+      useArrayState
+
+  
+  - trigger: ':react.hook useFetch'
     replace: |
       import { useState, useEffect } from 'react';
 
@@ -35,7 +54,7 @@ matches:
       // Usage:
       const { data, loading, error } = useFetch('https://api.example.com/data');
 
-  - trigger: ':react.code usePrevious'
+  - trigger: ':react.hook usePrevious'
     replace: |
       import { useRef, useEffect } from 'react';
 
@@ -52,7 +71,7 @@ matches:
       // Usage:
       const previousCount = usePrevious(count);
 
-  - trigger: ':react.code useToggle'
+  - trigger: ':react.hook useToggle'
     replace: |
       import { useState } from 'react';
 
@@ -67,7 +86,7 @@ matches:
       // Usage:
       const [isToggled, toggle] = useToggle();
 
-  - trigger: ':react.code useLocalStorage'
+  - trigger: ':react.hook useLocalStorage'
     replace: |
       import { useState } from 'react';
 
@@ -97,7 +116,7 @@ matches:
       // Usage:
       const [name, setName] = useLocalStorage('name', 'Guest');
 
-  - trigger: ':react.code useDebounce'
+  - trigger: ':react.hook useDebounce'
     replace: |
       import { useState, useEffect } from 'react';
 
@@ -118,7 +137,7 @@ matches:
       // Usage:
       const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-  - trigger: ':react.code useInterval'
+  - trigger: ':react.hook useInterval'
     replace: |
       import { useEffect, useRef } from 'react';
 
@@ -142,7 +161,7 @@ matches:
         setCount(prevCount => prevCount + 1);
       }, 1000);
 
-  - trigger: ':react.code useWindowSize'
+  - trigger: ':react.hook useWindowSize'
     replace: |
       import { useState, useEffect } from 'react';
 
@@ -169,7 +188,7 @@ matches:
       Usage:
       const { width, height } = useWindowSize();
 
-  - trigger: ':react.code useOnClickOutside'
+  - trigger: ':react.hook useOnClickOutside'
     replace: |
       import { useEffect } from 'react';
 
@@ -192,7 +211,7 @@ matches:
       const modalRef = useRef();
       useOnClickOutside(modalRef, () => setIsOpen(false));
 
-  - trigger: ':react.code useHover'
+  - trigger: ':react.hook useHover'
     replace: |
       import { useState, useRef, useEffect } from 'react';
 
@@ -222,7 +241,7 @@ matches:
       Usage:
       const [hoverRef, isHovered] = useHover();
 
-  - trigger: ':react.code useMediaQuery'
+  - trigger: ':react.hook useMediaQuery'
     replace: |
       import { useEffect, useState } from 'react';
 
@@ -245,7 +264,7 @@ matches:
       // Usage:
       const isLargeScreen = useMediaQuery('(min-width: 1024px)');
 
-  - trigger: ':react.code useWebSocket'
+  - trigger: ':react.hook useWebSocket'
     replace: |
       import { useState, useEffect, useRef, useCallback } from 'react';
 
@@ -318,7 +337,7 @@ matches:
         setInputValue('');
       };
 
-  - trigger: ':react.code useInfiniteScroll'
+  - trigger: ':react.hook useInfiniteScroll'
     replace: |
       import { useState, useEffect, useRef, useCallback } from 'react';
 
@@ -389,7 +408,37 @@ matches:
         );
       }
 
-  - trigger: ':react.code useLocalStorage'
+  - trigger: ':react.hook useLocalStorage'
+    replace: |
+      import { useState } from 'react';
+
+      function useLocalStorage(key, initialValue) {
+        const [storedValue, setStoredValue] = useState(() => {
+          try {
+            const item = localStorage.getItem(key);
+            return item ? JSON.parse(item) : initialValue;
+          } catch (error) {
+            console.log(error);
+            return initialValue;
+          }
+        });
+
+        const setValue = value => {
+          try {
+            setStoredValue(value);
+            localStorage.setItem(key, JSON.stringify(value));
+          } catch (error) {
+            console.log(error);
+          }
+        };
+
+        return [storedValue, setValue];
+      }
+
+      Usage:
+      const [name, setName] = useLocalStorage('name', 'Guest');
+  
+  - trigger: ':react.hook useThrottle'
     replace: |
       import { useRef } from 'react';
 
@@ -419,3 +468,48 @@ matches:
 
         return <div style={{ height: '2000px' }}>Scroll down to see throttled console logs.</div>;
       }
+
+  - trigger: ":react.hook useArrayState"
+    replace: |
+      import { useState } from "react";
+
+      const useArrayState = <T>(initialState: T[] = []) => {
+      const [state, setState] = useState<T[]>(initialState);
+
+      const add = (newValue: T) => {
+          setState((currentState) => [...currentState, newValue]);
+      };
+
+      const remove = (index: number) => {
+          setState((currentState) => {
+              const newState = [...currentState];
+              if (index >= 0 && index < newState.length) {
+                  newState.splice(index, 1);
+              }
+              return newState;
+          });
+      };
+
+      const update = (index: number, newValue: T) => {
+          setState((currentState) => {
+              const newState = [...currentState];
+              if (index >= 0 && index < newState.length) {
+                  newState[index] = newValue;
+              }
+              return newState;
+          });
+      };
+
+      const clear = () => {
+          setState([]);
+      };
+
+      const reset = () => {
+          setState(initialState);
+      };
+
+      return [state, { add, remove, update, clear, reset }] as const;
+      };
+
+      export default useArrayState;
+
