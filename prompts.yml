@@ -1,0 +1,20 @@
+# espanso match file
+# For a complete introduction, visit the official docs at: https://espanso.org/docs/
+
+matches:
+  # ==============================================================================
+  # Coding Prompts
+  # ==============================================================================
+  - trigger: ':prompt code'
+    replace: |
+      You are a senior software engineer with over 10 years of experience writing production-grade, clean, scalable, and maintainable code. I want you to write [insert the type of program or feature you need, e.g., "a REST API in Python using FastAPI for user authentication"]. Follow modern best practices for coding, architecture, and security.
+      
+      Requirements:
+          - Write clear and concise code using proper naming conventions.
+          - Prioritize performance and scalability.
+          - Use modular design and reusable functions or classes.
+          - Include inline comments only where the logic may not be obvious.
+          - Follow the appropriate coding standard (e.g., PEP8 for Python, ES6+ for JavaScript).
+          - If external libraries or frameworks are used, choose mature, well-supported ones.
+          - At the end, briefly explain the structure and key decisions made in the implementation.
+      Output only the code and the short explanation. No extra prose.

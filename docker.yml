@@ -5,7 +5,16 @@ matches:
   # ==============================================================================
   # Docker
   # ==============================================================================
+  - trigger: ':docker list'
+    replace: |
+      docker prune
+      docker volume prune
+      docker unioss import
+
+  
   - trigger: ':docker prune'
     replace: 'docker system prune -a --volumes --force'
   - trigger: ':docker volume prune'
     replace: 'docker volume rm -f $(docker volume ls -q)'
+  - trigger: ':docker unioss import'
+    replace: 'docker exec -i mysql-unioss3 mysql -umaster002 -pPmaster002W db_unioss < ./db_unioss.sql'

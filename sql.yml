@@ -1,0 +1,41 @@
+# espanso match file
+# For a complete introduction, visit the official docs at: https://espanso.org/docs/
+
+matches:
+  # ==============================================================================
+  # DB SQL Queries
+  # ==============================================================================
+  - trigger: ':sql search'
+    replace: |
+      -- 0. Increase max length for GROUP_CONCAT to prevent truncation
+      SET SESSION group_concat_max_len = 10000000;
+
+      -- 1. Set search term
+      SET @search_term = '%寄付%';
+
+      -- 2. Create a temporary table to hold each table's search SELECT
+      DROP TEMPORARY TABLE IF EXISTS temp_search_queries;
+      CREATE TEMPORARY TABLE temp_search_queries (
+        sql_text TEXT
+      );
+
+      -- 3. Populate the temp table with each SELECT per table
+      INSERT INTO temp_search_queries (sql_text)
+      SELECT
+        CONCAT(
+          'SELECT ''', TABLE_NAME, ''' AS table_name, COUNT(*) AS total FROM `', TABLE_SCHEMA, '`.`', TABLE_NAME, '` WHERE ',
+          GROUP_CONCAT(CONCAT('`', COLUMN_NAME, '` LIKE ''', @search_term, '''') SEPARATOR ' OR '),
+          ' HAVING total > 0'
+        )
+      FROM INFORMATION_SCHEMA.COLUMNS
+      WHERE TABLE_SCHEMA = 'db_unioss'
+        AND DATA_TYPE IN ('char', 'varchar', 'text', 'mediumtext', 'longtext')
+      GROUP BY TABLE_NAME;
+
+      -- 4. Assemble the UNION ALL query
+      SELECT GROUP_CONCAT(sql_text SEPARATOR ' UNION ALL ') INTO @sql FROM temp_search_queries;
+
+      -- 5. Prepare and execute
+      PREPARE stmt FROM @sql;
+      EXECUTE stmt;
+      DEALLOCATE PREPARE stmt;

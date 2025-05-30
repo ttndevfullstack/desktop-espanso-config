@@ -18,7 +18,7 @@ matches:
   # Linux commands
   # ==============================================================================
   # Install phpenv
-  - trigger: ":linux install phpenv"
+  - trigger: ":linux i phpenv"
     replace: |
       sudo apt update && \
       sudo apt install -y git build-essential libssl-dev libcurl4-openssl-dev libxml2-dev libjpeg-dev libpng-dev libfreetype6-dev libbz2-dev libreadline-dev libonig-dev && \
@@ -28,6 +28,18 @@ matches:
       source ~/.bashrc && \
       git clone https://github.com/php-build/php-build.git ~/.phpenv/plugins/php-build && \
       phpenv -v
+
+  # Install Composer
+  - trigger: ":linux i composer"
+    replace: |
+      sudo apt update && \
+      sudo apt install php-cli unzip && \
+      cd ~ && \
+      curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php && \
+      HASH=`curl -sS https://composer.github.io/installer.sig` && \
+      php -r "if (hash_file('SHA384', '/tmp/composer-setup.php') === '$HASH') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && \
+      sudo php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
+      composer
 
   - trigger: ":linux show group"
     replace: "getent group <group_name>"
