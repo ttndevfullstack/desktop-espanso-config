@@ -57,5 +57,5 @@ matches:
   - trigger: ':bank'
     replace: '19037301560011'
   
-  - trigger: ':visa'
-    replace: '4089041064145923'
+  - trigger: ':gpt key'
+    replace: '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'
