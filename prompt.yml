@@ -5,7 +5,37 @@ matches:
   # ==============================================================================
   # Prompts
   # ==============================================================================
-  - trigger: ':prompt fix'
+  - trigger: ':prompt list'
+    replace: |
+        prompt list
+        prompt code
+        prompt fix bug'
+        prompt write code'
+        prompt summary youtube'
+        prompt design ui'
+        prompt question
+        prompt improve
+        prompt debug
+        prompt review
+        prompt explain
+        prompt analyze requirement'
+
+
+  - trigger: ':prompt code'
+    replace: |
+      You are a senior software engineer with over 10 years of experience writing production-grade, clean, scalable, and maintainable code. I want you to write [insert the type of program or feature you need, e.g., "a REST API in Python using FastAPI for user authentication"]. Follow modern best practices for coding, architecture, and security.
+      
+      Requirements:
+          - Write clear and concise code using proper naming conventions.
+          - Prioritize performance and scalability.
+          - Use modular design and reusable functions or classes.
+          - Include inline comments only where the logic may not be obvious.
+          - Follow the appropriate coding standard (e.g., PEP8 for Python, ES6+ for JavaScript).
+          - If external libraries or frameworks are used, choose mature, well-supported ones.
+          - At the end, briefly explain the structure and key decisions made in the implementation.
+      Output only the code and the short explanation. No extra prose.
+  
+  - trigger: ':prompt fix bug'
     replace: |
       You are a highly skilled senior software developer with expertise in [Framework]. Your task is to identify, fix, and optimize the code to resolve specific issues and improve performance. Ensure the final solution is robust, maintainable, and adheres to best practices.
 
@@ -22,7 +52,7 @@ matches:
       - Updated test cases and coverage report.
       - Suggestions for future improvements or preventive measures.
 
-  - trigger: ':prompt code'
+  - trigger: ':prompt write code'
     replace: |
       You have several years of expertise as a senior developer. Write code for a [Project Type/Technology] that [TASK]. Verify that it is the best option and that it is applied to nearly all major business projects. Make sure the code is clear, easy to read, and maintainable.
 
@@ -43,7 +73,7 @@ matches:
       - Document the solution thoroughly, including inline comments and external documentation.
       - Ensure the code includes proper comments and is production-ready.
 
-  - trigger: ':prompt summary'
+  - trigger: ':prompt summary youtube'
     replace: |
       You are an AI assistant specialized in analyzing YouTube video transcripts related to software engineering. Your task is to extract key insights from a given script. Identify the following:
 
@@ -55,7 +85,7 @@ matches:
       Common Mistakes (if mentioned) – Identify and summarize any pitfalls the speaker warns about.
       This is script "".
 
-  - trigger: ':prompt ui'
+  - trigger: ':prompt design ui'
     replace: |
       Create a modern and sleek UI using TailwindCSS that closely matches the attached image. The UI should include interactive effects such as hover states, click animations, and smooth transitions to enhance user experience. Ensure the design is visually appealing with subtle color enhancements while maintaining a clean aesthetic. Follow these detailed requirements:
 
@@ -121,3 +151,16 @@ matches:
   - trigger: ':prompt explain'
     replace: |
       Explain [topic, e.g., 'React hooks'] as if I'm a mid-level developer. Start with core principles, then ask me 2-3 questions to gauge my familiarity and adapt your explanation (e.g., 'Are you comfortable with closures?').
+
+  - trigger: ':prompt analyze requirement'
+    replace: |
+      Bạn là một chuyên gia phân tích dự án phần mềm. Hãy giúp tôi phân tích sâu và toàn diện về tình hình hiện tại của dự án phần mềm Nhật mà tôi đang làm việc.
+
+      1. Mô tả rõ ràng mong muốn thực sự của khách hàng, bao gồm mục tiêu, yêu cầu chính và kỳ vọng.
+      2. Xác định các điểm chưa rõ ràng, cần làm rõ hoặc xác nhận với khách hàng để tránh hiểu nhầm.
+      3. Đưa ra định nghĩa hoàn thành (Definition of Done) cụ thể cho từng tính năng hoặc giai đoạn dự án.
+      4. Đề xuất các hành động cụ thể cần thực hiện để đáp ứng yêu cầu khách hàng và tiến độ dự án.
+      5. Đưa ra các phương pháp kiểm thử phù hợp nhằm đảm bảo chất lượng sản phẩm cuối cùng.
+      6. Trình bày mọi thứ chi tiết, rõ ràng và dễ hiểu, nhằm giúp toàn bộ nhóm phát triển và khách hàng cùng nắm bắt được.
+
+      Hãy phân tích theo từng phần, sử dụng ngôn ngữ đơn giản nhưng chính xác, tránh thuật ngữ phức tạp, và nhấn mạnh vào những điểm quan trọng cần chú ý. Đây là yêu cầu "".

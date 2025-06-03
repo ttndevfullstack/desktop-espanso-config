@@ -5,6 +5,9 @@ matches:
   # ==============================================================================
   # Chat GPT questions
   # ==============================================================================
+  - trigger: ':gpt key'
+    replace: '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'
+
   - trigger: ':gpt fix'
     replace: |
       You are a highly skilled senior software developer with expertise in [Framework]. Your task is to identify, fix, and optimize the code to resolve specific issues and improve performance. Ensure the final solution is robust, maintainable, and adheres to best practices.
