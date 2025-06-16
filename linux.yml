@@ -1,4 +1,18 @@
 matches:
+  - trigger: ":linux list"
+    replace: |
+      ssh qasoft
+      ssh personal
+      ssh school
+      add node
+      linux show group
+      linux user pass
+      linux add user
+      linux clean
+      linux i zsh
+      linux i phpenv
+      linux i composer
+
   # ==============================================================================
   # Bash Scripts
   # ==============================================================================
@@ -12,13 +26,33 @@ matches:
   - trigger: ':add node'
     replace: 'export NODE_OPTIONS=--max-old-space-size=8192'
 
+  # ==============================================================================
+  # Linux command
+  # ==============================================================================
+  - trigger: ':linux show group'
+    replace: 'getent group <group_name>'
 
+  - trigger: ':linux user pass'
+    replace: 'getent passwd <user_name>'
+
+  - trigger: ':linux add user'
+    replace: 'sudo usermod -aG docker <user_name>'
+
+  - trigger: ':linux clean'
+    replace: |
+      sudo apt autoremove -y && sudo apt autoclean && sudo apt clean && \
+      sudo apt --purge autoremove && sudo journalctl --vacuum-time=3d && \
+      sudo rm -rf /var/log/*.gz /var/log/*.[0-9]
 
   # ==============================================================================
-  # Linux commands
+  # Linux install
   # ==============================================================================
   # Install phpenv
-  - trigger: ":linux i phpenv"
+  - trigger: ':linux i zsh'
+    replace: 'mkdir -p ~/.zsh && git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions && source ~/.zshrc'
+
+  # Install phpenv
+  - trigger: ':linux i phpenv'
     replace: |
       sudo apt update && \
       sudo apt install -y git build-essential libssl-dev libcurl4-openssl-dev libxml2-dev libjpeg-dev libpng-dev libfreetype6-dev libbz2-dev libreadline-dev libonig-dev && \
@@ -30,7 +64,7 @@ matches:
       phpenv -v
 
   # Install Composer
-  - trigger: ":linux i composer"
+  - trigger: ':linux i composer'
     replace: |
       sudo apt update && \
       sudo apt install php-cli unzip && \
@@ -40,25 +74,3 @@ matches:
       php -r "if (hash_file('SHA384', '/tmp/composer-setup.php') === '$HASH') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && \
       sudo php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
       composer
-
-  - trigger: ":linux show group"
-    replace: "getent group <group_name>"
-  
-  - trigger: ":linux show group"
-    replace: "getent group <group_name>"
-  
-  - trigger: ":linux user pass"
-    replace: "getent passwd <user_name>"
-  
-  - trigger: ":linux add user"
-    replace: "sudo adduser <user_name>"
-  
-  - trigger: ":linux add user"
-    replace: "sudo usermod -aG docker <user_name>"
-  
-  - trigger: ":linux clean"
-    replace: |
-      sudo apt autoremove -y && sudo apt autoclean && sudo apt clean && \
-      sudo apt --purge autoremove && sudo journalctl --vacuum-time=3d && \
-      sudo rm -rf /var/log/*.gz /var/log/*.[0-9]
-
