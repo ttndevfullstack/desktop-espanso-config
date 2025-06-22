@@ -11,7 +11,7 @@ matches:
     replace: 'xclip -selection clipboard'
   - trigger: ':pwd'
     replace: 'pwd | xclip -selection clipboard'
-  - trigger: ':copy struct'
+  - trigger: ':structure'
     replace: 'find <dir_name> -type d > structure.txt && find <dir_name> >> structure.txt'
 
 

@@ -14,6 +14,9 @@ matches:
   
   - trigger: ':temp'
     replace: '/mnt/c/Users/ttnde/Downloads/temp/'
+  
+  - trigger: ':espanso'
+    replace: '/mnt/c/Users/ttnde/AppData/Roaming/espanso/match'
 
   # MISA
   - trigger: ':misa'

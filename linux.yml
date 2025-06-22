@@ -1,58 +1,62 @@
 matches:
-  - trigger: ":linux list"
+  - trigger: ':linux list'
     replace: |
+      li clean
       ssh qasoft
       ssh personal
       ssh school
-      add node
-      linux show group
-      linux user pass
-      linux add user
-      linux clean
-      linux i zsh
-      linux i phpenv
-      linux i composer
+      li gr show
+      li ur pass
+      li ur add
+      li i zsh
+      li i phpenv
+      li i composer
 
   # ==============================================================================
-  # Bash Scripts
+  # Memory
   # ==============================================================================
-  # ADD SSH
-  - trigger: ':ssh qasoft'
-    replace: 'eval $(ssh-agent -s) && ssh-add ~/.ssh/id_ttndev_qasoft'
-  - trigger: ':ssh personal'
-    replace: 'eval $(ssh-agent -s) && ssh-add ~/.ssh/id_ttndev_personal'
-  - trigger: ':ssh school'
-    replace: 'eval $(ssh-agent -s) && ssh-add ~/.ssh/id_ttndev_school'
-  - trigger: ':add node'
-    replace: 'export NODE_OPTIONS=--max-old-space-size=8192'
-
-  # ==============================================================================
-  # Linux command
-  # ==============================================================================
-  - trigger: ':linux show group'
-    replace: 'getent group <group_name>'
-
-  - trigger: ':linux user pass'
-    replace: 'getent passwd <user_name>'
-
-  - trigger: ':linux add user'
-    replace: 'sudo usermod -aG docker <user_name>'
-
-  - trigger: ':linux clean'
+  - trigger: ':li clean'
     replace: |
       sudo apt autoremove -y && sudo apt autoclean && sudo apt clean && \
       sudo apt --purge autoremove && sudo journalctl --vacuum-time=3d && \
       sudo rm -rf /var/log/*.gz /var/log/*.[0-9]
+ 
+  - trigger: ':li size'
+    replace: 'du -sh * | sort -rh'
 
   # ==============================================================================
-  # Linux install
+  # SSH
+  # ==============================================================================
+  - trigger: ':ssh qasoft'
+    replace: 'eval $(ssh-agent -s) && ssh-add ~/.ssh/id_ttndev_qasoft'
+ 
+  - trigger: ':ssh personal'
+    replace: 'eval $(ssh-agent -s) && ssh-add ~/.ssh/id_ttndev_personal'
+ 
+  - trigger: ':ssh school'
+    replace: 'eval $(ssh-agent -s) && ssh-add ~/.ssh/id_ttndev_school'
+
+  # ==============================================================================
+  # Permissions
+  # ==============================================================================
+  - trigger: ':li gr show'
+    replace: 'getent group <group_name>'
+
+  - trigger: ':li ur pass'
+    replace: 'getent passwd <user_name>'
+
+  - trigger: ':li ur add'
+    replace: 'sudo usermod -aG docker <user_name>'
+
+  # ==============================================================================
+  # Packages Installation
   # ==============================================================================
   # Install phpenv
-  - trigger: ':linux i zsh'
+  - trigger: ':li i zsh'
     replace: 'mkdir -p ~/.zsh && git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions && source ~/.zshrc'
 
   # Install phpenv
-  - trigger: ':linux i phpenv'
+  - trigger: ':li i phpenv'
     replace: |
       sudo apt update && \
       sudo apt install -y git build-essential libssl-dev libcurl4-openssl-dev libxml2-dev libjpeg-dev libpng-dev libfreetype6-dev libbz2-dev libreadline-dev libonig-dev && \
@@ -64,7 +68,7 @@ matches:
       phpenv -v
 
   # Install Composer
-  - trigger: ':linux i composer'
+  - trigger: ':li i composer'
     replace: |
       sudo apt update && \
       sudo apt install php-cli unzip && \
