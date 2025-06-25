@@ -2,6 +2,27 @@ matches:
   # ==============================================================================
   # Git command
   # ==============================================================================
+  - trigger: ':git help'
+    replace: |
+      git help
+      git init
+      current
+      push
+      remote
+      develop
+      git stash push
+      git stash apply
+      git reset branch
+      git tag
+      git commit init
+      git commit feat
+      git commit fix
+      git commit update
+      git commit refactor
+      git commit conflict
+      git sub init
+      git sub update
+
   - trigger: ':git init'
     replace: 'git init && git add . && git commit -m "feat: initialize app" && git branch -M main && git remote add origin git@github.com:ttndevfullstack/PROJECT.git && git push -u origin main'
   - trigger: ':current'

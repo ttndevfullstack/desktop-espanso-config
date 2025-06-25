@@ -11,11 +11,19 @@ matches:
     replace: 'nghia.truong@tpssoft.com'
   - trigger: ':tps ps'
     replace: '146Ttn@tps'
-  - trigger: ':tps git ps'
-    replace: 'M1nhNguy3n'
   - trigger: ':ssh tps'
     replace: 'eval $(ssh-agent -s) && ssh-add ~/.ssh/id_ttndev_tps'
+
   
+  # ==============================================================================
+  # TPS Git
+  # ==============================================================================
+  - trigger: ':tps git em'
+    replace: 'minh.nguyen.ngoc@tpssoft.com'
+  - trigger: ':tps git ps'
+    replace: 'M1nhNguy3n'
+  - trigger: ':v3-master'
+    replace: 'git fetch origin && git checkout v3-master && git pull origin v3-master'
 
 
   # ==============================================================================
