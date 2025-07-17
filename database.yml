@@ -4,17 +4,15 @@ matches:
   # ==============================================================================
   - trigger: ':mysql list'
     replace: |
-      mysql list
       mysql add ser
-      mysql import
-      mysql backuptb struct
-      mysql backup tb data
-      mysql backup tb all
-      mysql backup db one
-      mysql backup db all
-      mysql show users
-      mysql show users
-      mysql show grant
+      mysql im
+      mysql bk tb struct
+      mysql bk tb data
+      mysql bk tb all
+      mysql bk db one
+      mysql bk db all
+      mysql sh users
+      mysql sh grant
       mysql grant all
 
   # User Control
@@ -26,53 +24,50 @@ matches:
     replace: 'sudo mysql -u ttndev -p nail_dev < /mnt/c/Users/ttnde/Downloads/Telegram\ Desktop/top1.sql'
 
   # Backup
-  - trigger: ':mysql backup tb struct'
-    replace: 'mysqldump -u root -p -d [db] [tb] > /home/ttndev/backups/mysql/archive/db_[db]_tb_[tb]_struct_{{timestamp}}.sql'
+  - trigger: ':mysql bk tb struct'
+    replace: 'mysqldump -u root -p<pass> -d [db] [tb] > /home/ttndev/backups/mysql/archive/db_[db]_tb_[tb]_struct_{{timestamp}}.sql'
     vars:
       - name: timestamp
         type: date
         params:
           format: '%m_%d_%Y_%H_%M_%S'
 
-  - trigger: ':mysql backup tb data'
-    replace: 'mysqldump -u root -p -t [db] [tb] > /home/ttndev/backups/mysql/archive/db_[db]_tb_[tb]_data_{{timestamp}}.sql'
+  - trigger: ':mysql bk tb data'
+    replace: 'mysqldump -u root -p<pass> -t [db] [tb] > /home/ttndev/backups/mysql/archive/db_[db]_tb_[tb]_data_{{timestamp}}.sql'
     vars:
       - name: timestamp
         type: date
         params:
           format: '%m_%d_%Y_%H_%M_%S'
 
-  - trigger: ':mysql backup tb all'
-    replace: 'mysqldump -u root -p -t [db] [tb] > /home/ttndev/backups/mysql/archive/db_[db]_tb_[tb]_{{timestamp}}.sql'
+  - trigger: ':mysql bk tb all'
+    replace: 'mysqldump -uroot -p<pass> -t [db] [tb] > /home/ttndev/backups/mysql/archive/db_[db]_tb_[tb]_{{timestamp}}.sql'
     vars:
       - name: timestamp
         type: date
         params:
           format: '%m_%d_%Y_%H_%M_%S'
 
-  - trigger: ':mysql backup db one'
-    replace: 'mysqldump -u root -p [db] > /home/ttndev/backups/mysql/archive/db_[db]_{{timestamp}}.sql'
+  - trigger: ':mysql bk db one'
+    replace: 'mysqldump -u root -p<pass> [db] > /home/ttndev/backups/mysql/archive/db_[db]_{{timestamp}}.sql'
     vars:
       - name: timestamp
         type: date
         params:
           format: '%m_%d_%Y_%H_%M_%S'
 
-  - trigger: ':mysql backup db all'
-    replace: 'mysqldump -u root -p --all-databases > /home/ttndev/backups/mysql/archive/db_all_{{timestamp}}.sql'
+  - trigger: ':mysql bk db all'
+    replace: 'mysqldump -u root -p<pass> --all-databases > /home/ttndev/backups/mysql/archive/db_all_{{timestamp}}.sql'
     vars:
       - name: timestamp
         type: date
         params:
           format: '%m_%d_%Y_%H_%M_%S'
 
-  - trigger: ':mysql show users'
+  - trigger: ':mysql sh users'
     replace: 'SELECT user, host FROM mysql.user;'
 
-  - trigger: ':mysql show users'
-    replace: 'SELECT user, host FROM mysql.user;'
-
-  - trigger: ':mysql show grants'
+  - trigger: ':mysql sh grants'
     replace: "SHOW GRANTS FOR 'ttndev'@'%';"
 
   - trigger: ':mysql grant all'

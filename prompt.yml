@@ -17,6 +17,22 @@ matches:
         prompt explain
         prompt analyze requirement'
 
+  - trigger: ':prompt research'
+    replace: |
+      I want to master [insert topic, e.g., "JavaScript async/await"] as a senior software engineer using the 80/20 principle.
+
+        Step 1: Identify the 20% of concepts, patterns, or techniques in [topic] that provide 80% of the practical value in real-world software engineering.
+
+        Step 2: For each key concept, explain how and why it works, including under-the-hood or low-level mechanisms, edge cases, and best practices.
+
+        Step 3: Provide actionable steps, hands-on exercises, or real-world scenarios to practice and reinforce each critical point.
+
+        Step 4: Summarize advanced tips, common pitfalls, and how experts debug or optimize code in this area.
+
+        Step 5: List common problems for this topic, express it in the form of a question, ask yourself and come up with 3 solutions to that problem, and finally choose the best one.
+
+      My goal: After this, I should be able to understand and teach this topic at a senior developer level, reason about the internals, and apply best practices in a professional codebase.
+
 
   - trigger: ':prompt code'
     replace: |
