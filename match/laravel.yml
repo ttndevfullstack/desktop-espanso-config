@@ -1,4 +1,4 @@
-matches:
+matchet:
   - trigger: ":laravel.code list"
     replace: |
       Conditional
